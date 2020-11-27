@@ -148,7 +148,7 @@ AWS_S3_ENDPOINT_URL = 'http://' + AWS_S3_ENDPOINT_URL[0] + '.docker:9000'
 print(AWS_S3_ENDPOINT_URL)
 AWS_ACCESS_KEY_ID = 'blogsley'
 AWS_SECRET_ACCESS_KEY = 'blogsley'
-AWS_STORAGE_BUCKET_NAME = 'static'
+AWS_STORAGE_BUCKET_NAME = 'blogsley'
 # AWS_LOCATION = 'static'
 
 # corsheaders
