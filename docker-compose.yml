@@ -1,0 +1,100 @@
+# Local dev environment
+
+version: "3.8"
+services:
+  # server
+  blogsley:
+    build:
+      context: ./server
+      target: dev
+    depends_on:
+      - blogsley-pg
+      - blogsley-s3
+      - blogsley-dps
+    environment:
+      - DEBUG=TRUE
+      - BLOGSLEY_SECRET_KEY=${BLOGSLEY_SECRET_KEY}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - S3_HOST=${S3_HOST}
+    ports:
+      - 8000:8000
+    networks:
+      - blogsley
+    restart: "no"
+    volumes:
+      - "./server:/blogsley"
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - blogsley-pg
+    restart: always
+    ports:
+        - "8888:80"
+    environment:
+        PGADMIN_DEFAULT_EMAIL: 1234@admin.com
+        PGADMIN_DEFAULT_PASSWORD: 1234
+    volumes:
+        - ./volumes/pgadmin:/var/lib/pgadmin4/storage
+    networks:
+      - blogsley
+
+  # Database
+  blogsley-pg:
+    image: postgres:12.3
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+    restart: "no"
+    volumes:
+      - "./volumes/postgres:/var/lib/postgresql/data"
+    networks:
+      - blogsley
+  
+
+  # Front-end
+  blogsley-admin:
+    build:
+      # context: admin
+      context: ./admin
+      target: quasar-dev
+    ports:
+      - 8080:8080
+    restart: "no"
+    volumes:
+      - "./admin:/admin"
+
+  # Storage
+  blogsley-s3:
+    image: minio/minio
+    ports:
+      - 9000:9000
+    hostname: blogsley-s3.docker
+    networks:
+      blogsley:
+         aliases:
+           - blogsley-s3.docker
+    volumes:
+      - ./volumes/minio:/minio
+    environment:
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+    command: server /minio
+
+  blogsley-dps:
+    image: defreitas/dns-proxy-server:latest
+    hostname: dns.mageddo
+    volumes:
+      - ./volumes/dps/conf:/app/conf
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+    ports:
+      - "5380:5380"
+    network_mode: bridge
+
+networks:
+  blogsley:

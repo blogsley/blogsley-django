@@ -1,0 +1,10 @@
+type Query {
+    allUsers(after: String, before: String, first: Int, last: Int): UserConnection!
+    user(id: ID!): User!
+
+    allPosts(after: String, before: String, first: Int, last: Int): PostConnection!
+    post(id: ID!): Post!
+
+    allImages(after: String, before: String, first: Int, last: Int): ImageConnection!
+    image(id: ID!): Image!
+}

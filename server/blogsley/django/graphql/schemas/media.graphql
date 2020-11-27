@@ -1,0 +1,28 @@
+scalar Upload
+
+type ImageConnection {
+  edges: [ImageEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ImageEdge {
+  cursor: String!
+  node: Image!
+}
+
+type Image {
+  id: ID!
+  title: String!
+  filename: String!
+  src: String!
+}
+
+input ImageInput {
+  title: String!
+  filename: String!
+}
+
+type ImageEvent {
+  kind: String!
+  ok: Boolean!
+}

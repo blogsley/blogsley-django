@@ -1,0 +1,17 @@
+type Mutation {
+  login(data: LoginInput!): LogIn!
+  register(data: RegisterInput!): Boolean!
+
+  createUser(data: UserInput!): User!
+  updateUser(id: ID!, data: UserInput!): User
+  deleteUser(id: ID!): Boolean!
+
+  createPost(data: PostInput!): Post!
+  updatePost(id: ID!, data: PostInput!): PostEvent!
+  deletePost(id: ID!): PostEvent!
+
+  createImage(data: ImageInput!): Image!
+  updateImage(id: ID!, data: ImageInput!): ImageEvent!
+  deleteImage(id: ID!): ImageEvent!
+  uploadImage(data: ImageInput, upload: Upload!): Image!
+}
