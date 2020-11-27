@@ -1,0 +1,12 @@
+{
+  "name": "@blocksley/demo-core",
+  "version": "0.1.30-alpha.0",
+  "main": "index.js",
+  "repository": "https://github.com/blocksley/blocksley",
+  "author": "Kurtis Fields",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "696cf80ee363f25ae9b00ea9efa2eea3d8bc402e"
+}

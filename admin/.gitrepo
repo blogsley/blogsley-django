@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/blogsley/blogsley-admin
+	branch = master
+	commit = bfb3cc36efdd3e86991f7d7b07b76bdb338c0709
+	parent = 79089d555dbc11960988a9337aa23cfdfc41b6dc
+	method = merge
+	cmdver = 0.4.3
